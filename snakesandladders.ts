@@ -6,26 +6,29 @@ function quickestPath(board: {
   const queue: [number] = [1];
   let roll: number[] = [];
   let path: [number, number][] = [];
-  let status = true;
   let currentPos = 1;
   while (queue.length > 0) {
     currentPos = queue.shift()!;
     let nextPathLadder: [number, number] | undefined;
     let nextPathSanke: [number, number] | undefined;
+    let status = true;
     for (let i = 1; i <= 6; i++) {
       let nextPos = currentPos + i;
       nextPathLadder = ladders.find((data) => data[0] === nextPos);
       nextPathSanke = ladders.find((data) => data[0] === nextPos);
       if (nextPathLadder) {
+        console.log(nextPathLadder[1]);
         queue.push(nextPathLadder[1]);
         status = false;
         path.push(nextPathLadder);
         roll.push(i);
+        break;
       } else if (nextPathSanke) {
         queue.push(nextPathSanke[1]);
         status = false;
         path.push(nextPathSanke);
         roll.push(i);
+        break;
       }
     }
 
@@ -38,7 +41,6 @@ function quickestPath(board: {
         roll.push(6);
       }
     }
-    console.log(currentPos);
     if (currentPos >= 100) {
       break;
     }
@@ -55,12 +57,12 @@ function quickestPath(board: {
       }
     }
   }
-
   return roll;
 }
 
 quickestPath({
   ladders: [
+    [2, 37],
     [3, 39],
     [14, 35],
     [31, 70],
